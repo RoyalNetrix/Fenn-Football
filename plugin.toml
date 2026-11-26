@@ -1,7 +1,7 @@
 id          = "football"
 name        = "Football"
 description = "Live scores and today's fixtures (ESPN public scoreboard, no key)."
-version     = "0.3.1"
+version     = "0.3.2"
 icon        = "soccer-ball"
 size        = "wide"
 mode        = "live"

@@ -39,6 +39,15 @@ def txt(text, **kw):
     return {"type": "text", "text": text, **kw}
 
 
+def friendly(e):
+    s = str(e)
+    if any(k in s for k in ("11001", "getaddrinfo", "Name or service", "unreachable", "10051", "10065")):
+        return "No internet, retrying"
+    if "timed out" in s:
+        return "Timed out, retrying"
+    return s[:40]
+
+
 def fetch():
     global matches, err
     try:
@@ -68,7 +77,7 @@ def fetch():
             matches, err = ms, ""
     except Exception as e:
         with state_lock:
-            err = str(e)[:60]
+            err = friendly(e)
         print("fetch failed:", e, file=sys.stderr)
 
 
@@ -125,12 +134,16 @@ def render():
 
 
 def refresher():
+    fails = 0
     while True:
         fetch()
         render()
         with state_lock:
             live = any(x["state"] == "in" for x in matches)
-        trigger.wait(60 if live else 300)
+            bad = bool(err)
+        fails = fails + 1 if bad else 0
+        # on failure retry soon (1, 2, 4, then every 5 min); offline retries cost almost no data
+        trigger.wait(min(60 * 2 ** (fails - 1), 300) if bad else (60 if live else 300))
         trigger.clear()
 
 

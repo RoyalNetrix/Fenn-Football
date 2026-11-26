@@ -10,7 +10,9 @@ Live scores and today's fixtures for six leagues on your Fenn notch.
 
 ## Refresh
 
-It asks ESPN for the selected league every 60 seconds while a match is live and every 5 minutes otherwise. The refresh button updates it at once.
+It asks ESPN for the selected league every 60 seconds while a match is live and every 5 minutes otherwise. The refresh button updates it at once. If the connection drops, the tile says `No internet, retrying` and tries again after 1, 2 and 4 minutes, then every 5 minutes.
+
+Want less data? See [Fenn-FootballSaver](https://github.com/RoyalNetrix/Fenn-FootballSaver).
 
 ## Install
 
@@ -22,7 +24,7 @@ Requires Fenn with plugin support.
 
 ## Requirements
 
-Python 3.8+ on your PATH. No extra packages, no API key.
+Python 3.8+ (Fenn can set it up for you, or use your own). No extra packages, no API key.
 
 ## Network and privacy
 
@@ -42,8 +44,8 @@ Python 3.8+ on your PATH. No extra packages, no API key.
 ## Troubleshooting
 
 - **Tile says "Stopped":** hover it to see the error and the last lines of the plugin's output.
-- **Nothing happens:** make sure `python --version` works in a new PowerShell window. If it doesn't, install Python from python.org and tick "Add python.exe to PATH".
-- **Full log:** The `.log` file in `%APPDATA%\Fenn\` has the plugin's errors.
+- **Nothing happens:** Fenn can set up Python for you. If that didn't work, make sure `python --version` works in a new PowerShell window, or install Python from python.org and tick "Add python.exe to PATH".
+- **Full log:** the logs of the last ten Fenn runs are in `%APPDATA%\Fenn\logs`.
 - **Plugins are programs.** They run with the same rights as Fenn. Read the code (one short file) before installing any plugin.
 
 ## Credits and license
